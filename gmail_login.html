@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Gmail login</title>
+        <meta name="google-signin-client_id" content="513313429486-ivglrhc2e646ad25sg176lp7louur6h5.apps.googleusercontent.com">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+    </head>
+    <body>
+        <div id="google_sign_in" class="g-signin2" data-onsuccess="gmailLogIn"></div>
+        <a id="google_sign_out" href="javascript:void(0)" onclick="logout()" style="display:none;">Logout</a><br/><br/>
+        <div id="getData">
+            ID : <b id="userId"></b><br/>
+            Name : <b id="userName"></b><br/>
+            Email : <b id="userEmail"></b><br/>
+            Image : <img id="userImage" /><br/>
+        </div>
+        <script>
+            function logout(){
+                var auth = gapi.auth2.getAuthInstance();
+                auth.signOut();
+                location.reload();
+                document.getElementById("google_sign_out").style.display="none";
+                document.getElementById("google_sign_in").style.display="block";
+            }
+            function gmailLogIn(userInfo){
+                var userProfile = userInfo.getBasicProfile();
+                document.getElementById("userId").innerHTML = userProfile.getId();
+                document.getElementById("userName").innerHTML = userProfile.getName();
+                document.getElementById("userEmail").innerHTML = userProfile.getEmail();
+                document.getElementById("userImage").src= userProfile.getImageUrl();
+                document.getElementById("google_sign_in").style.display="none";
+                document.getElementById("google_sign_out").style.display="block";
+            }
+        </script>
+    </body>
+</html>
